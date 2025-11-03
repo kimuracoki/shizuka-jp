@@ -103,7 +103,6 @@ h1 {
 #write > h2:first-of-type ~ hr{
   text-align: initial;
   color: inherit;
-  font-size: inherit;
 }
 
 /* Paragraphs and lists */
