@@ -1,0 +1,150 @@
+/* Typora Theme: Shizuka JP (Night) v1.1
+   - 日本語優先のタイポグラフィ（暗色版）
+   - Light版 shizuka-jp.css とペアで使用
+*/
+
+:root {
+  --bg: #0f172a;           /* slate-900 */
+  --panel: #1e293b;        /* slate-800 */
+  --text: #e2e8f0;         /* slate-200 */
+  --muted: #94a3b8;        /* slate-400 */
+  --border: #334155;       /* slate-700 */
+  --accent: #3b82f6;       /* blue-500 */
+  --accent-weak: #1e3a8a;  /* blue-900 */
+  --code-bg: #1e293b;      /* same as panel */
+  --kbd-bg: #334155;
+  --shadow: 0 1px 2px rgba(255,255,255,.04), 0 2px 8px rgba(0,0,0,.4);
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color-scheme: dark;
+}
+
+body {
+  font-family:
+    "Noto Sans JP","Hiragino Kaku Gothic ProN","Hiragino Sans",
+    "Yu Gothic UI","Yu Gothic","Meiryo",
+    Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  font-feature-settings: "palt" 1,"kern" 1,"liga" 1,"calt" 1;
+  font-variant-east-asian: proportional-width;
+}
+
+#write {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 28px 28px 96px;
+}
+
+/* Links */
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:visited { color: var(--accent); }
+
+/* Headings */
+h1,h2,h3,h4,h5,h6 {
+  position: relative;
+  margin: 1.05rem 0 .85rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: #f1f5f9;
+}
+h1 { font-size: 1.65rem; padding-bottom: .35rem; }
+h2 { font-size: 1.38rem; padding-bottom: .25rem; }
+h3 { font-size: 1.18rem; }
+h4 { font-size: 1.05rem; }
+h5 { font-size: 1.00rem; color: #e2e8f0; }
+h6 { font-size: 0.92rem; color: var(--muted); }
+
+h1 {
+  text-align: center;
+  margin-top: 10rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding: .2rem 1rem;
+  color: var(--muted);
+  background: rgba(59,130,246,0.1);
+  border-radius: 0 6px 6px 0;
+}
+blockquote blockquote {
+  background: rgba(30,58,138,0.3);
+  border-left-color: #60a5fa;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--text);
+}
+thead, tr:nth-child(2n) {
+  background: #1e293b;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: .6rem .8rem;
+}
+th { font-weight: 700; background: #334155; }
+
+/* Code */
+code, tt {
+  border: 1px solid #475569;
+  background: #1e293b;
+  border-radius: 6px;
+  padding: 0 .35em;
+  font-size: .92em;
+  color: #e0e7ff;
+}
+.md-fences {
+  margin: 16px 0;
+  padding: 12px 14px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  font-size: .93em;
+}
+
+/* Keyboard key */
+kbd {
+  display: inline-block;
+  padding: .2em .5em;
+  border: 1px solid #475569;
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: #334155;
+  font-size: .85em;
+  color: #f8fafc;
+}
+
+/* Meta block */
+#write pre.md-meta-block {
+  padding: 1rem;
+  font-size: 85%;
+  line-height: 1.45;
+  background: #1e293b;
+  border-radius: 10px;
+  color: #94a3b8;
+  box-shadow: var(--shadow);
+}
+
+/* Print */
+@media print {
+  html { font-size: 13px; }
+  pre { page-break-inside: avoid; word-wrap: break-word; }
+  h1, h2 { border-bottom: none; }
+  body { background: #fff; color: #000; }
+}
