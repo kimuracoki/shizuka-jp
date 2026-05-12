@@ -193,6 +193,74 @@ kbd {
   box-shadow: var(--shadow);
 }
 
+/* Sidebar / File Tree — Typora CSS variables */
+:root {
+  --side-bar-bg-color: #1e293b;
+  --item-hover-bg-color: #334155;
+  --item-hover-text-color: #f1f5f9;
+  --active-file-bg-color: #1e3a8a;
+  --active-file-text-color: #e0e7ff;
+  --active-file-border-color: #3b82f6;
+  --window-border: 1px solid #334155;
+}
+
+/* Sidebar container */
+#typora-sidebar {
+  background: var(--side-bar-bg-color);
+  color: var(--text);
+}
+.mac-seamless-mode #typora-sidebar { background: var(--side-bar-bg-color); }
+
+/* Tab bar */
+.info-panel-tab-wrapper {
+  background: var(--side-bar-bg-color);
+  border-bottom: 1px solid var(--border);
+}
+.info-panel-tab { color: var(--muted); }
+.info-panel-tab.active { color: var(--text); border-bottom: 2px solid var(--accent); }
+
+/* File tree nodes */
+.file-node-background { background: transparent; }
+.file-library-node:hover .file-node-background { background: var(--item-hover-bg-color); }
+.file-library-node.active .file-node-background { background: var(--active-file-bg-color); }
+.file-node-content { color: var(--text); }
+.file-library-node.active .file-node-content { color: var(--active-file-text-color); }
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state { visibility: visible; }
+.file-node-icon,
+.file-node-open-state { color: var(--muted); }
+
+/* File list items */
+.file-list-item { color: var(--text); border-bottom: 1px solid var(--border); }
+.file-list-item:hover { background: var(--item-hover-bg-color); }
+.file-list-item.active { background: var(--active-file-bg-color); color: var(--active-file-text-color); }
+.file-list-item-file-name { color: var(--text); }
+.file-list-item.active .file-list-item-file-name { color: var(--active-file-text-color); }
+.file-list-item-time,
+.file-list-item-summary,
+.file-list-item-parent-loc { color: var(--muted); }
+
+/* Sidebar footer */
+.sidebar-footer { background: var(--side-bar-bg-color); border-top: 1px solid var(--border); }
+.sidebar-footer-item { color: var(--muted); }
+.sidebar-footer-item:hover { color: var(--text); }
+
+/* Quick open */
+#typora-quick-open {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+#typora-quick-open-input .ty-input {
+  background: #0f172a;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.ty-search-item { color: var(--text); }
+.ty-search-item:hover { background: var(--item-hover-bg-color); }
+#typora-quick-open-item { background: var(--panel); color: var(--text); border-color: var(--border); }
+#typora-quick-open-item:hover { background: var(--item-hover-bg-color); }
+
 /* Print */
 @media print {
   html { font-size: 13px; }
