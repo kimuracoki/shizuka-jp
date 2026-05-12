@@ -221,9 +221,10 @@ kbd {
 
 /* File tree nodes */
 .file-node-background { background: transparent; }
-.file-library-node:hover .file-node-background { background: var(--item-hover-bg-color); }
+.file-library-node:hover .file-node-background { background: rgba(255,255,255,0.05); }
 .file-library-node.active .file-node-background { background: var(--active-file-bg-color); }
 .file-node-content { color: var(--text); }
+.file-library-node:hover .file-node-content { color: #f8fafc !important; }
 .file-library-node.active .file-node-content { color: var(--active-file-text-color); }
 .file-node-content:hover .file-node-icon,
 .file-node-content:hover .file-node-open-state { visibility: visible; }
