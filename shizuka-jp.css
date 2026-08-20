@@ -236,3 +236,40 @@ header,.context-menu,.megamenu-content,footer{
 }
 
 @media print { @page{ size:A4; margin:20mm 25mm; } }
+
+/* ── Code block copy button（HTMLエクスポート用） ──
+   有効化: copy-code.html の <script> を
+   環境設定 → 一般 → 詳細設定 → 「Append in <body/>」に貼り付け。
+   PDFではJSが動かないため印刷時は非表示。 */
+.shizuka-code-wrap{ position:relative; }
+.shizuka-copy{
+  position:absolute; top:8px; right:8px;
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; padding:0;
+  color:#94a3b8;
+  background:rgba(255,255,255,.88);
+  border:1px solid var(--border);
+  border-radius:8px;
+  cursor:pointer;
+  opacity:0;
+  transition:opacity .15s ease,color .15s ease,border-color .15s ease,background .15s ease;
+}
+.shizuka-copy svg{ display:block; width:15px; height:15px; }
+.shizuka-code-wrap:hover .shizuka-copy,
+.shizuka-copy:focus-visible{ opacity:1; }
+.shizuka-copy:hover{ color:var(--accent); border-color:var(--accent); background:#fff; }
+.shizuka-copy.is-copied{
+  opacity:1;
+  color:var(--accent);
+  border-color:var(--accent);
+  background:var(--accent-weak);
+}
+.shizuka-copy.is-failed{ opacity:1; color:#dc2626; border-color:#fca5a5; }
+.shizuka-copy .icon-done{ display:none; }
+.shizuka-copy.is-copied .icon-copy{ display:none; }
+.shizuka-copy.is-copied .icon-done{ display:block; }
+
+/* タッチ環境はホバーがないので常時表示 */
+@media (hover:none){ .shizuka-copy{ opacity:.7; } }
+
+@media print{ .shizuka-copy{ display:none !important; } }

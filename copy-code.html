@@ -1,0 +1,111 @@
+<!-- Shizuka JP — コードブロックのコピーボタン（HTMLエクスポート用）
+
+  使い方:
+    Typora → 環境設定 → 一般 → 詳細設定 → 「Append in <body/>」に
+    以下の <script> ... </script> をそのまま貼り付ける。
+    特定のファイルだけに適用する場合は YAML front matter に
+      append-body-extra: '<script> ... </script>'
+    を書いてもよい。
+
+  注意:
+    - PDFエクスポートでは動作しない（PDFにJS/クリップボードがないため）。
+      印刷時はテーマCSS側の @media print でボタンを隠している。
+    - 「styles を含めない HTML」でエクスポートした場合も pre > code を拾って動作する。
+-->
+<script>
+(function () {
+  var RESET_MS = 1600;
+
+  var ICON_COPY =
+    '<svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+    ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<rect x="9" y="9" width="11" height="11" rx="2"></rect>' +
+    '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+
+  var ICON_DONE =
+    '<svg class="icon-done" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+    ' stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M20 6 9 17l-5-5"></path></svg>';
+
+  // CodeMirror 出力（通常のHTMLエクスポート）と pre>code（プレーン出力）の両方に対応
+  function codeText(pre) {
+    var lines = pre.querySelectorAll('.CodeMirror-line');
+    var text;
+    if (lines.length) {
+      text = Array.prototype.map.call(lines, function (el) {
+        return el.textContent;
+      }).join('\n');
+    } else {
+      var code = pre.querySelector('code');
+      text = (code || pre).textContent;
+    }
+    return text.replace(/\u200b/g, '').replace(/\s+$/, '');
+  }
+
+  // file:// で navigator.clipboard が使えない環境向けのフォールバック付き
+  function copy(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:-9999px;';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      ok ? resolve() : reject();
+    });
+  }
+
+  function attach(pre) {
+    var text = codeText(pre);
+    if (!text) return;
+
+    // 横スクロールでボタンが流れないよう、pre の外側に包む
+    var wrap = document.createElement('div');
+    wrap.className = 'shizuka-code-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'shizuka-copy';
+    btn.title = 'コピー';
+    btn.setAttribute('aria-label', 'コードをコピー');
+    btn.innerHTML = ICON_COPY + ICON_DONE;
+    wrap.appendChild(btn);
+
+    var timer;
+    function flash(ok) {
+      btn.classList.toggle('is-copied', ok);
+      btn.classList.toggle('is-failed', !ok);
+      btn.title = ok ? 'コピーしました' : 'コピーできませんでした';
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        btn.classList.remove('is-copied', 'is-failed');
+        btn.title = 'コピー';
+      }, RESET_MS);
+    }
+
+    btn.addEventListener('click', function () {
+      copy(text).then(function () { flash(true); },
+                      function () { flash(false); });
+    });
+  }
+
+  function init() {
+    Array.prototype.forEach.call(
+      document.querySelectorAll('#write pre.md-fences'), attach);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
